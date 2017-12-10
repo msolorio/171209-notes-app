@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/msolorio/171209-notes-app#readme",
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "yargs": "^4.7.1"
   },
   "devDependencies": {
     "nodemon": "^1.12.5"
