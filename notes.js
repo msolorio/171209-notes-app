@@ -6,10 +6,17 @@ function addNote(title, body) {
   const newNote = { title, body };
   const allNotesString = fs.readFileSync('./notes.json');
   const allNotesParsed = JSON.parse(allNotesString);
-  allNotesParsed.notes.push(newNote);
-  const newNotesString = JSON.stringify(allNotesParsed);
 
-  fs.writeFileSync('./notes.json', newNotesString);
+  const duplicateNote = allNotesParsed.notes.find(note => note.title === title);
+
+  if (duplicateNote) {
+    console.log(`Note with title, "${title}" already exists. Please provide a unique title.`);
+    return;
+  }
+
+  allNotesParsed.notes.push(newNote);
+
+  fs.writeFileSync('./notes.json', JSON.stringify(allNotesParsed));
 }
 
 function getAll() {
@@ -37,8 +44,8 @@ function removeNote(title) {
   const allNotesString = fs.readFileSync('./notes.json');
   const allNotesParsed = JSON.parse(allNotesString);
   allNotesParsed.notes = allNotesParsed.notes.filter(note => note.title !== title);
-  const newNotesString = JSON.stringify(allNotesParsed);
-  fs.writeFileSync('./notes.json', newNotesString);
+
+  fs.writeFileSync('./notes.json', JSON.stringify(allNotesParsed));
 }
 
 module.exports = {
