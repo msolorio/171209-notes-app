@@ -5,29 +5,27 @@ const notes = require('./notes');
 const argv = require('yargs').argv;
 const { title: argTitle, body: argBody } = argv;
 
-console.log('argv:', argv);
-
+console.log('yargs:', argv);
 console.log('running app js');
 
-const command = process.argv[2];
+const command = argv._[0];
 
 function performUserAction(command) {
   switch(command) {
     case 'add':
-      console.log('adding note');
       notes.addNote(argTitle, argBody);
       break;
 
     case 'list':
-      console.log('displaying list');
+      notes.getAll();
       break;
 
     case 'read':
-      console.log('displaying an individual note');
+      notes.getNote(argTitle);
       break;
 
     case 'remove':
-      console.log('removing an individual note');
+      notes.removeNote(argTitle);
       break;
 
     default:
