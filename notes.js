@@ -3,20 +3,24 @@ const fs = require('fs');
 function addNote(title, body) {
   console.log(`adding note: ${title}, ${body}`);
 
+  const noteData = { notes: [] };
   const newNote = { title, body };
-  const allNotesString = fs.readFileSync('./notes.json');
-  const allNotesParsed = JSON.parse(allNotesString);
 
-  const duplicateNote = allNotesParsed.notes.find(note => note.title === title);
+  try {
+    const allNotesString = fs.readFileSync('./notes.json');
+    noteData = JSON.parse(allNotesString);
+  } catch(e) {};
+
+  const duplicateNote = noteData.notes.find(note => note.title === title);
 
   if (duplicateNote) {
     console.log(`Note with title, "${title}" already exists. Please provide a unique title.`);
     return;
   }
 
-  allNotesParsed.notes.push(newNote);
+  noteData.notes.push(newNote);
 
-  fs.writeFileSync('./notes.json', JSON.stringify(allNotesParsed));
+  fs.writeFileSync('./notes.json', JSON.stringify(noteData));
 }
 
 function getAll() {
