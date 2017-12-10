@@ -3,12 +3,8 @@ const fs = require('fs');
 const os = require('os');
 const notes = require('./notes');
 const argv = require('yargs').argv;
-const { title: argTitle, body: argBody } = argv;
-
-console.log('yargs:', argv);
-console.log('running app js');
-
 const command = argv._[0];
+const { title: argTitle, body: argBody } = argv;
 
 function performUserAction(command) {
   switch(command) {
