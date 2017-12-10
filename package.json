@@ -1,0 +1,27 @@
+{
+  "name": "notes-app",
+  "version": "1.0.0",
+  "description": "A note taking app with node <br/>https://www.udemy.com/the-complete-nodejs-developer-course-2/",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "startDev": "./node_modules/.bin/nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msolorio/171209-notes-app.git"
+  },
+  "author": "michael solorio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/msolorio/171209-notes-app/issues"
+  },
+  "homepage": "https://github.com/msolorio/171209-notes-app#readme",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.5"
+  }
+}
