@@ -3,7 +3,7 @@ const fs = require('fs');
 function addNote(title, body) {
   console.log(`adding note: ${title}, ${body}`);
 
-  const noteData = { notes: [] };
+  let noteData = { notes: [] };
   const newNote = { title, body };
 
   try {
@@ -26,18 +26,32 @@ function addNote(title, body) {
 function getAll() {
   console.log('Getting all notes');
 
-  const allNotesString = fs.readFileSync('./notes.json');
-  const allNotes = JSON.parse(allNotesString).notes;
+  let noteData = { notes: [] };
 
-  console.log('allNotes:', allNotes);
+  try {
+    const allNotesString = fs.readFileSync('./notes.json');
+    noteData.notes = JSON.parse(allNotesString).notes;
+  } catch(e) {};
+
+  console.log('allNotes:', noteData.notes);
 }
 
 function getNote(title) {
   console.log(`getting note: ${title}`);
 
-  const allNotesString = fs.readFileSync('./notes.json');
-  const allNotesParsed = JSON.parse(allNotesString);
-  const chosenNote = allNotesParsed.notes.find(note => note.title === title);
+  let noteData = { notes: [] };
+
+  try {
+    const allNotesString = fs.readFileSync('./notes.json');
+    const noteData = JSON.parse(allNotesString);
+  } catch(e) {};
+
+  const chosenNote = noteData.notes.find(note => note.title === title);
+
+  if (!chosenNote) {
+    console.log(`Note with title "${title}" doesn't exist.`);
+    return;
+  }
 
   console.log('chosenNote:', chosenNote);
 }
@@ -45,11 +59,16 @@ function getNote(title) {
 function removeNote(title) {
   console.log(`removing note: ${title}`);
 
-  const allNotesString = fs.readFileSync('./notes.json');
-  const allNotesParsed = JSON.parse(allNotesString);
-  allNotesParsed.notes = allNotesParsed.notes.filter(note => note.title !== title);
+  let noteData = { notes: [] };
 
-  fs.writeFileSync('./notes.json', JSON.stringify(allNotesParsed));
+  try {
+    const allNotesString = fs.readFileSync('./notes.json');
+    noteData = JSON.parse(allNotesString);
+  } catch(e) {};
+
+  noteData.notes = noteData.notes.filter(note => note.title !== title);
+
+  fs.writeFileSync('./notes.json', JSON.stringify(noteData));
 }
 
 module.exports = {
