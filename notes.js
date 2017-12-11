@@ -9,6 +9,10 @@ function fetchNotes() {
   };
 }
 
+function saveNotes(noteData) {
+  fs.writeFileSync('./notes.json', JSON.stringify(noteData));
+}
+
 function addNote(title, body) {
   console.log(`adding note: ${title}, ${body}`);
   const noteData = fetchNotes();
@@ -23,7 +27,7 @@ function addNote(title, body) {
 
   noteData.notes.push(newNote);
 
-  fs.writeFileSync('./notes.json', JSON.stringify(noteData));
+  saveNotes(noteData);
 }
 
 function getAll() {
@@ -53,7 +57,7 @@ function removeNote(title) {
 
   noteData.notes = noteData.notes.filter(note => note.title !== title);
 
-  fs.writeFileSync('./notes.json', JSON.stringify(noteData));
+  saveNotes(noteData);
 }
 
 module.exports = {
