@@ -1,1 +1,18 @@
-{"notes":[{"title":"new note","body":"here is some note body"},{"title":"another note","body":"more body"},{"title":"another noteeee","body":"asdasdf"},{"title":"another more note","body":"here is some body"}]}
+{
+  "notes": [{
+    "title": "new note",
+    "body": "here is some note body"
+  }, {
+    "title": "another note",
+    "body": "more body"
+  }, {
+    "title": "another noteeee",
+    "body": "asdasdf"
+  }, {
+    "title": "another more note",
+    "body": "here is some body"
+  }, {
+    "title": "more note",
+    "body": "here is some body"
+  }]
+}

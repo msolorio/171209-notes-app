@@ -5,17 +5,23 @@ function fetchNotes() {
     const allNotesString = fs.readFileSync('./notes.json');
     return JSON.parse(allNotesString);
   } catch(e) {
+    console.error('There was an error fetching note data', e);
     return { notes: [] };
   };
 }
 
+
 function saveNotes(noteData, cb) {
   try {
     fs.writeFileSync('./notes.json', JSON.stringify(noteData));
-  } catch(e) {}
+  } catch(e) {
+    console.error('unable to update notes data.\n', e);
+    return;
+  }
 
   cb && (typeof cb === 'function') && cb();
 }
+
 
 function addNote(title, body) {
   const noteData = fetchNotes();
@@ -35,15 +41,15 @@ function addNote(title, body) {
   });
 }
 
+
 function getAll() {
-  console.log('Getting all notes');
   const noteData = fetchNotes();
 
-  console.log('allNotes:', noteData.notes);
+  console.log('all notes:', noteData.notes);
 }
 
+
 function getNote(title) {
-  console.log(`getting note: ${title}`);
   const noteData = fetchNotes();
 
   const chosenNote = noteData.notes.find(note => note.title === title);
@@ -53,19 +59,27 @@ function getNote(title) {
     return;
   }
 
-  console.log('chosenNote:', chosenNote);
+  console.log('chosen note:', chosenNote);
 }
 
+
 function removeNote(title) {
-  console.log(`removing note: ${title}`);
   const noteData = fetchNotes();
 
-  noteData.notes = noteData.notes.filter(note => note.title !== title);
+  const filteredNotesArray = noteData.notes.filter(note => note.title !== title);
+
+  if (noteData.notes.length === filteredNotesArray.length) {
+    console.log(`No note found with title "${title}"`);
+    return;
+  }
+
+  noteData.notes = filteredNotesArray;
 
   saveNotes(noteData, () => {
     console.log(`Removed note with title "${title}"`);
   });
 }
+
 
 module.exports = {
   addNote,
