@@ -9,12 +9,15 @@ function fetchNotes() {
   };
 }
 
-function saveNotes(noteData) {
-  fs.writeFileSync('./notes.json', JSON.stringify(noteData));
+function saveNotes(noteData, cb) {
+  try {
+    fs.writeFileSync('./notes.json', JSON.stringify(noteData));
+  } catch(e) {}
+
+  cb && (typeof cb === 'function') && cb();
 }
 
 function addNote(title, body) {
-  console.log(`adding note: ${title}, ${body}`);
   const noteData = fetchNotes();
   const newNote = { title, body };
 
@@ -27,7 +30,9 @@ function addNote(title, body) {
 
   noteData.notes.push(newNote);
 
-  saveNotes(noteData);
+  saveNotes(noteData, () => {
+    console.log(`New note create with title "${title}" and body "${body}"`);
+  });
 }
 
 function getAll() {
@@ -57,7 +62,9 @@ function removeNote(title) {
 
   noteData.notes = noteData.notes.filter(note => note.title !== title);
 
-  saveNotes(noteData);
+  saveNotes(noteData, () => {
+    console.log(`Removed note with title "${title}"`);
+  });
 }
 
 module.exports = {
