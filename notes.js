@@ -1,15 +1,18 @@
 const fs = require('fs');
 
-function addNote(title, body) {
-  console.log(`adding note: ${title}, ${body}`);
-
-  let noteData = { notes: [] };
-  const newNote = { title, body };
-
+function fetchNotes() {
   try {
     const allNotesString = fs.readFileSync('./notes.json');
-    noteData = JSON.parse(allNotesString);
-  } catch(e) {};
+    return JSON.parse(allNotesString);
+  } catch(e) {
+    return { notes: [] };
+  };
+}
+
+function addNote(title, body) {
+  console.log(`adding note: ${title}, ${body}`);
+  const noteData = fetchNotes();
+  const newNote = { title, body };
 
   const duplicateNote = noteData.notes.find(note => note.title === title);
 
@@ -25,26 +28,14 @@ function addNote(title, body) {
 
 function getAll() {
   console.log('Getting all notes');
-
-  let noteData = { notes: [] };
-
-  try {
-    const allNotesString = fs.readFileSync('./notes.json');
-    noteData.notes = JSON.parse(allNotesString).notes;
-  } catch(e) {};
+  const noteData = fetchNotes();
 
   console.log('allNotes:', noteData.notes);
 }
 
 function getNote(title) {
   console.log(`getting note: ${title}`);
-
-  let noteData = { notes: [] };
-
-  try {
-    const allNotesString = fs.readFileSync('./notes.json');
-    const noteData = JSON.parse(allNotesString);
-  } catch(e) {};
+  const noteData = fetchNotes();
 
   const chosenNote = noteData.notes.find(note => note.title === title);
 
@@ -58,13 +49,7 @@ function getNote(title) {
 
 function removeNote(title) {
   console.log(`removing note: ${title}`);
-
-  let noteData = { notes: [] };
-
-  try {
-    const allNotesString = fs.readFileSync('./notes.json');
-    noteData = JSON.parse(allNotesString);
-  } catch(e) {};
+  const noteData = fetchNotes();
 
   noteData.notes = noteData.notes.filter(note => note.title !== title);
 
