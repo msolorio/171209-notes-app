@@ -5,7 +5,6 @@ const notes = require('./notes');
 const argv = require('./argv');
 
 const command = argv._[0];
-// const { title: argTitle, body: argBody } = argv;
 
 function performUserAction(command) {
   switch(command) {
