@@ -2,14 +2,15 @@ const _ = require('lodash');
 const fs = require('fs');
 const os = require('os');
 const notes = require('./notes');
-const argv = require('yargs').argv;
+const argv = require('./argv');
+
 const command = argv._[0];
-const { title: argTitle, body: argBody } = argv;
+// const { title: argTitle, body: argBody } = argv;
 
 function performUserAction(command) {
   switch(command) {
     case 'add':
-      notes.addNote(argTitle, argBody);
+      notes.addNote(argv.title, argv.body);
       break;
 
     case 'list':
@@ -17,11 +18,11 @@ function performUserAction(command) {
       break;
 
     case 'read':
-      notes.getNote(argTitle);
+      notes.getNote(argv.title);
       break;
 
     case 'remove':
-      notes.removeNote(argTitle);
+      notes.removeNote(argv.title);
       break;
 
     default:
