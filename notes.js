@@ -23,6 +23,20 @@ function saveNotes(noteData, cb) {
 }
 
 
+function logNote(note, index) {
+  const count = (
+    index !== undefined
+    ? `${index + 1}. `
+    : ''
+  );
+
+  console.log(
+`${count}-------------------\n
+title: ${note.title}\n
+body: ${note.body}\n`
+  );
+}
+
 function addNote(title, body) {
   const noteData = fetchNotes();
   const newNote = { title, body };
@@ -43,9 +57,7 @@ function addNote(title, body) {
 
 
 function getAll() {
-  const noteData = fetchNotes();
-
-  console.log('all notes:', noteData.notes);
+  fetchNotes().notes.forEach((note, index) => logNote(note, index));
 }
 
 
@@ -59,7 +71,7 @@ function getNote(title) {
     return;
   }
 
-  console.log('chosen note:', chosenNote);
+  logNote(chosenNote);
 }
 
 
